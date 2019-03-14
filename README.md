@@ -1,2 +1,2 @@
 # qa-anaphoric
-Question answering using anaphoric relations
+Question answering using anaphoric relations 
