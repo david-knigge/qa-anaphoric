@@ -26,10 +26,15 @@ def get_anaphoric_words(input_sentence):
             anaphoric_words.append(word)
     return anaphoric_words
 
-input_sentence = "Who lives there?"
-doc = nlp(input_sentence)
+def get_entities(input_sentence):
+    entities = []
+    doc = nlp(input_sentence)
+    for entity in doc.ents:
+        entities.append((entity.text, entity.label_))
+    return entities
 
-for entity in doc.ents:
-    print(entity.text, entity.label_)
+input_sentence = "Who is the son of Donald Trump?"
+
 print(get_anaphoric_words(input_sentence))
+print(get_entities(input_sentence))
 
