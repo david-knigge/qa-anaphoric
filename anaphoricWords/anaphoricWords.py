@@ -6,9 +6,11 @@ import nltk
 # List with all possible tags
 # print(nltk.help.upenn_tagset())
 
+commonPronouns = ["this","these","that","those","here","there"]
+
 def getAnaphoricWords(inputSentence):
     '''
-    Returns a list with personal/possesive pronouns and 'there', found in the sentence
+    Returns a list anaphoric words found in the sentence
     '''
     anaphoricWords = []
     tokens = nltk.word_tokenize(inputSentence)
@@ -17,12 +19,10 @@ def getAnaphoricWords(inputSentence):
         # print(word, tag)
         if 'PRP' in tag:
             anaphoricWords.append(word)
-        elif tag == 'RB' and word == "there":
-            anaphoricWords.append(word)
-        elif tag == 'IN' and word == "that":
+        elif tag == "RB" and word in commonPronouns:
             anaphoricWords.append(word)
     return anaphoricWords
 
-inputSentence = "Is that true?"
+inputSentence = "Who lives there?"
 print(getAnaphoricWords(inputSentence))
 
