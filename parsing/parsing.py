@@ -11,6 +11,7 @@ nlp = spacy.load("xx_ent_wiki_sm")
 
 common_pronouns = ["this","these","that","those","here","there"]
 
+
 def get_anaphoric_words(input_sentence):
     '''
     Returns a list anaphoric words found in the sentence
@@ -26,15 +27,11 @@ def get_anaphoric_words(input_sentence):
             anaphoric_words.append(word)
     return anaphoric_words
 
+
 def get_entities(input_sentence):
     entities = []
     doc = nlp(input_sentence)
     for entity in doc.ents:
         entities.append((entity.text, entity.label_))
     return entities
-
-input_sentence = "Who is the son of Donald Trump?"
-
-print(get_anaphoric_words(input_sentence))
-print(get_entities(input_sentence))
 
