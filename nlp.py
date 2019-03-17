@@ -36,7 +36,7 @@ class Parser:
         docs = self.nlp(input_doc.lower())
         for sent in docs.sents:
             for word in sent:
-                if word.pos_ in ['PRON', 'PRP', 'PRP$'] or (word.pos_ == "RB" and word in self.common_pronouns):
+                if word.pos_ in ['PRON', 'PRP', 'PRP$'] or (word.pos_ in ["RB", "ADV"] and word in self.common_pronouns):
                     anaphoric_words.append([word.text, self.transform([sent.text])])
         return anaphoric_words
 
