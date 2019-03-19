@@ -38,10 +38,14 @@ def main(**kwargs):
             except (wikipedia.exceptions.DisambiguationError, wikipedia.exceptions.WikipediaException):
                 summ = ""
 
-            if ent[1] == "PERSON":
+            try:
                 gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))
+            except:
+                gender = ""
+
+            if ent[1] == "PERSON" or gender:
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.PER, gender=gender, summary=p.transform([summ])))
-            elif ent[1] == ["LOC", "GPE"]:
+            elif ent[1] in ["LOC", "GPE"]:
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.LOC, summary=p.transform([summ])))
             elif ent[1] in ["ORG"]:
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.ORG, summary=p.transform([summ])))
