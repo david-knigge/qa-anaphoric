@@ -12,6 +12,8 @@ class Entity:
         LOC = auto()
         ORG = auto()
         MISC = auto()
+        PER.MALE = auto()
+        PER.FEMALE = auto()
 
     def __init__(self, name: str, type: Type, **dyn_props) -> None:
         super().__init__()
