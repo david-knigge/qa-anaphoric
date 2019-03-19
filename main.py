@@ -2,7 +2,7 @@ import spacy
 import argparse
 import wikipedia
 
-from knowledge_base import Stack, Entity
+from entity_store import Store, Entity
 from nlp import Parser
 
 
@@ -20,7 +20,7 @@ def main(**kwargs):
 
     nlp = spacy.load('en_core_web_sm')
 
-    s = Stack()
+    s = Store()
     p = Parser()
 
     while True:
@@ -33,18 +33,19 @@ def main(**kwargs):
 
         for ent in entities:
 
-            if ent[1] == "PERSON":
+            try:
                 summ = wikipedia.summary(ent[0])
+            except (wikipedia.exceptions.DisambiguationError, wikipedia.exceptions.WikipediaException):
+                summ = ""
+
+            if ent[1] == "PERSON":
                 gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.PER, gender=gender, summary=p.transform([summ])))
             elif ent[1] == ["LOC", "GPE"]:
-                summ = wikipedia.summary(ent[0])
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.LOC, summary=p.transform([summ])))
             elif ent[1] in ["ORG"]:
-                summ = wikipedia.summary(ent[0])
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.ORG, summary=p.transform([summ])))
             elif ent[1] == "MISC":
-                summ = wikipedia.summary(ent[0])
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.MISC, summary=p.transform([summ])))
 
         anaphora = p.get_anaphora(text)
@@ -66,6 +67,7 @@ def main(**kwargs):
 
             if most_likely:
                 print("POSSIBLE MATCH: {} -> {} --- {}".format(anaphor, most_likely.name, h_prob))
+        print(s)
 
 
 if __name__ == '__main__':

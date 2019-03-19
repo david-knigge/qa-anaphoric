@@ -2,6 +2,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import spacy
+from nltk.corpus import reuters
 
 
 class Parser:
@@ -34,8 +35,8 @@ class Parser:
     def get_anaphora(self, input_doc):
         anaphoric_words = []
         docs = self.nlp(input_doc.lower())
-        for sent in docs.sents:
-            for word in sent:
+        for index, sent in enumerate(docs.sents):
+            for index, word in enumerate(sent):
                 if word.tag_ in ['PRON', 'PRP', 'PRP$'] or (word.pos_ in ["RB", "ADV"] and word.text in self.common_pronouns):
                     anaphoric_words.append([word.text, self.transform([sent.text])])
         return anaphoric_words

@@ -36,7 +36,7 @@ class Entity:
         return self.__str__()
 
 
-class Stack:
+class Store:
 
     stored_entities = []
 
@@ -66,7 +66,10 @@ class Stack:
 
     def wolfram_alpha_query(self, query: str):
         wa = wolframalpha.Client("VH5LXL-ALTVYGQVU3")
-        return [result.text for result in wa.query(query).results]
+        try:
+            return [result.text for result in wa.query(query).results]
+        except AttributeError:
+            return None
 
 # s = Stack()
 # s.add_entity(Entity(name="henk", type=Entity.Type.PER))
