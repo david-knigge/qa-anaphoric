@@ -20,7 +20,7 @@ class Parser:
                 line = f.readline()
 
         self.model = TfidfVectorizer(ngram_range=(1, 1), vocabulary=self.vocab, min_df=1, stop_words="english", use_idf=False)
-        self.nlp = spacy.load("en")
+        self.nlp = spacy.load("en_core_web_sm")
         self.nlp.add_pipe(self.nlp.create_pipe('sentencizer'))
 
     def transform(self, doc: list):
