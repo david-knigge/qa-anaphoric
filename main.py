@@ -42,7 +42,12 @@ def main(**kwargs):
 
             try:
                 gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))
+            except:
+                gender = ""
+
+            if ent[1] == "PERSON" or gender:
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.PER, gender=gender, summary=p.transform([summ])))
+
             except AttributeError:
                 if ent[1] == ["LOC", "GPE"]:
                     s.add_entity(Entity(name=ent[0], type=Entity.Type.LOC, summary=p.transform([summ])))
