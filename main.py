@@ -42,10 +42,6 @@ def main(**kwargs):
 
             try:
                 gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))
-            except:
-                gender = ""
-
-            if ent[1] == "PERSON" or gender:
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.PER, gender=gender, summary=p.transform([summ])))
 
             except AttributeError:
@@ -75,8 +71,8 @@ def main(**kwargs):
 
             if most_likely:
                 print("POSSIBLE MATCH: {} -> {} --- {}".format(anaphor, most_likely.name, h_prob))
-        print(s.get_all_male())
-        print(s.get_all_female())
+        print("Male entities: ", s.get_all_male())
+        print("Female entities: ", s.get_all_female())
 
 
 if __name__ == '__main__':
