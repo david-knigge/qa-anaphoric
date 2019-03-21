@@ -2,6 +2,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import spacy
+from spacy.tokens.doc import get_entity_info
 from nltk.corpus import reuters
 
 
@@ -35,16 +36,17 @@ class Parser:
     def get_anaphora(self, input_doc):
         anaphoric_words = []
         docs = self.nlp(input_doc.lower())
-        for index, sent in enumerate(docs.sents):
-            for index, word in enumerate(sent):
+        w_index = 0
+        for s_index, sent in enumerate(docs.sents):
+            for _, word in enumerate(sent):
                 if word.tag_ in ['PRON', 'PRP', 'PRP$'] or (word.pos_ in ["RB", "ADV"] and word.text in self.common_pronouns):
-                    anaphoric_words.append([word.text, self.transform([sent.text])])
+                    anaphoric_words.append([word.text, self.transform([sent.text]), w_index])
+                w_index += 1
         return anaphoric_words
 
     def get_entities(self, input_sentence):
         entities = []
         doc = self.nlp(input_sentence)
         for entity in doc.ents:
-            entities.append((entity.text, entity.label_))
+            entities.append((entity.text, entity.label_, get_entity_info(entity)))
         return entities
-

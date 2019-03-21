@@ -52,17 +52,38 @@ def main(**kwargs):
                     gender = Entity.Type.MALE
                 elif gender[0] == "female":
                     gender = Entity.Type.FEMALE
-                s.add_entity(Entity(name=ent[0], type=Entity.Type.PER, gender=gender, summary=p.transform([summ])))
+                s.add_entity(Entity(
+                    name=ent[0],
+                    type=Entity.Type.PER,
+                    gender=gender,
+                    summary=p.transform([summ]),
+                    loc=(ent[2][1], ent[2][2])
+                ))
             elif ent[1] in ["LOC", "GPE"]:
-                s.add_entity(Entity(name=ent[0], type=Entity.Type.LOC, summary=p.transform([summ])))
+                s.add_entity(Entity(
+                    name=ent[0],
+                    type=Entity.Type.LOC,
+                    summary=p.transform([summ]),
+                    loc=(ent[2][1], ent[2][2])
+                ))
             elif ent[1] in ["ORG"]:
-                s.add_entity(Entity(name=ent[0], type=Entity.Type.ORG, summary=p.transform([summ])))
+                s.add_entity(Entity(
+                    name=ent[0],
+                    type=Entity.Type.ORG,
+                    summary=p.transform([summ]),
+                    loc=(ent[2][1], ent[2][2])
+                ))
             elif ent[1] == "MISC":
-                s.add_entity(Entity(name=ent[0], type=Entity.Type.MISC, summary=p.transform([summ])))
+                s.add_entity(Entity(
+                    name=ent[0],
+                    type=Entity.Type.MISC,
+                    summary=p.transform([summ]),
+                    loc=(ent[2][1], ent[2][2])
+                ))
 
         anaphora = p.get_anaphora(text)
 
-        for anaphor, an_context in anaphora:
+        for anaphor, an_context, an_index in anaphora:
 
             most_likely = None
             h_prob = -1
@@ -73,22 +94,16 @@ def main(**kwargs):
                 if anaphor in anaphor_list:
                     f_list.append([attributes[rule], rule])
 
-            #print(f_list)
-            #print(anaphor, list(s.get_any(Store.Filter(f_list))))
-            #print(s)
             for entity in s.get_any(Store.Filter(f_list)):
 
                 prob = p.sim(an_context, entity.summary)
-                #print(anaphor, entity.name, prob)
+
                 if prob > h_prob:
                     h_prob = prob
                     most_likely = entity
 
             if most_likely:
-                print("POSSIBLE MATCH: {} -> {} --- {}".format(anaphor, most_likely.name, h_prob))
-        #print("Male entities: ", s.get_all_male())
-        #print("Female entities: ", s.get_all_female())
-
+                print("POSSIBLE MATCH: '{}' at word index {} -> '{}' at word index {} --- {}".format(anaphor, an_index, most_likely.name, most_likely.loc, h_prob))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'QA with focus on anaphoric relations')

@@ -57,10 +57,10 @@ class Store:
             self.stored_entities.append(entity)
 
     def get_any(self, sf: Filter) -> filter:
-        return filter(lambda x: (any(getattr(x, f["attr"]) == f["val"] for f in sf.filter)), self.stored_entities)
+        return filter(lambda x: (any(getattr(x, f["attr"], None) == f["val"] for f in sf.filter)), self.stored_entities)
 
     def get_all(self, sf: Filter) -> filter:
-        return filter(lambda x: (all(getattr(x, f["attr"]) == f["val"] for f in sf.filter)), self.stored_entities)
+        return filter(lambda x: (all(getattr(x, f["attr"], None) == f["val"] for f in sf.filter)), self.stored_entities)
 
     def print_genders(self):
         for entity in self.stored_entities:
