@@ -12,7 +12,6 @@ class Entity:
         LOC = auto()
         ORG = auto()
         MISC = auto()
-
     def __init__(self, name: str, type: Type, **dyn_props) -> None:
         super().__init__()
 
@@ -21,13 +20,14 @@ class Entity:
         self.age_created = Entity.age
         self.age_touched = Entity.age
         Entity.age += 1
-
+        self.gender = ""
         for prop in dyn_props:
             setattr(self, prop, dyn_props[prop])
 
     def touch(self):
         self.age_touched = Entity.age
         Entity.age += 1
+
 
     def __str__(self) -> str:
         return pformat(self.__dict__, indent=2, width=1)
@@ -59,17 +59,28 @@ class Store:
     def get_all(self, sf: Filter) -> filter:
         return filter(lambda x: (all(getattr(x, f["attr"]) == f["val"] for f in sf.filter)), self.stored_entities)
 
+    def print_genders(self):
+        for entity in self.stored_entities:
+            print(entity.name,entity.type,entity.gender)
+
+    def get_all_male(self):
+        return ([entity.name for entity in self.stored_entities if entity.gender == ['male']])
+
+    def get_all_female(self):
+        return ([entity.name for entity in self.stored_entities if entity.gender == ['female']])
+        
     def __str__(self):
         return "{} ENTITIES:\n".format(len(self.stored_entities)) + pformat(
             sorted(self.stored_entities, key=lambda x: x.age_touched, reverse=True)
         )
 
+    #try except hier weghalen
     def wolfram_alpha_query(self, query: str):
         wa = wolframalpha.Client("VH5LXL-ALTVYGQVU3")
-        try:
-            return [result.text for result in wa.query(query).results]
-        except AttributeError:
-            return None
+        #try:
+        return [result.text for result in wa.query(query).results]
+        #except AttributeError:
+            #return None
 
 # s = Stack()
 # s.add_entity(Entity(name="henk", type=Entity.Type.PER))

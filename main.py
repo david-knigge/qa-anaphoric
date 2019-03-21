@@ -13,6 +13,8 @@ rules = {
     Entity.Type.LOC: ["there", "it", "this", "these", "that", "those", "here", "its", "itself"],
     Entity.Type.ORG: ["there", "it", "this", "these", "that", "those", "here", "its", "itself"],
     Entity.Type.MISC: ["there", "it", "this", "these", "that", "those", "here", "its", "itself"],
+
+
 }
 
 
@@ -38,15 +40,17 @@ def main(**kwargs):
             except (wikipedia.exceptions.DisambiguationError, wikipedia.exceptions.WikipediaException):
                 summ = ""
 
-            if ent[1] == "PERSON":
+            try:
                 gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.PER, gender=gender, summary=p.transform([summ])))
-            elif ent[1] == ["LOC", "GPE"]:
-                s.add_entity(Entity(name=ent[0], type=Entity.Type.LOC, summary=p.transform([summ])))
-            elif ent[1] in ["ORG"]:
-                s.add_entity(Entity(name=ent[0], type=Entity.Type.ORG, summary=p.transform([summ])))
-            elif ent[1] == "MISC":
-                s.add_entity(Entity(name=ent[0], type=Entity.Type.MISC, summary=p.transform([summ])))
+
+            except AttributeError:
+                if ent[1] == ["LOC", "GPE"]:
+                    s.add_entity(Entity(name=ent[0], type=Entity.Type.LOC, summary=p.transform([summ])))
+                elif ent[1] in ["ORG"]:
+                    s.add_entity(Entity(name=ent[0], type=Entity.Type.ORG, summary=p.transform([summ])))
+                elif ent[1] == "MISC":
+                    s.add_entity(Entity(name=ent[0], type=Entity.Type.MISC, summary=p.transform([summ])))
 
         anaphora = p.get_anaphora(text)
 
@@ -67,7 +71,8 @@ def main(**kwargs):
 
             if most_likely:
                 print("POSSIBLE MATCH: {} -> {} --- {}".format(anaphor, most_likely.name, h_prob))
-        print(s)
+        print("Male entities: ", s.get_all_male())
+        print("Female entities: ", s.get_all_female())
 
 
 if __name__ == '__main__':
