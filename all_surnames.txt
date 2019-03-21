@@ -1,4 +1,4 @@
-Ñeco
+﻿Ñeco
 Ñiguez
 Açaola
 Añaños
@@ -47666,7 +47666,6 @@ Londaitzbehere
 Londaiz
 Londaizbere
 Londoño
-London
 Londwiche
 Long
 Long
