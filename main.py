@@ -7,14 +7,21 @@ from nlp import Parser
 
 
 rules = {
-    Entity.Type.PER: ["i", "you", "he", "she", "we", "they", "me", "you", "him", "her", "us", "them", "my", "your", "his",
-                      "our", "their", "myself", "yourself", "himself", "herself", "ourselves", "yourselves", "themselves"
-                      ],
     Entity.Type.LOC: ["there", "it", "this", "these", "that", "those", "here", "its", "itself"],
     Entity.Type.ORG: ["there", "it", "this", "these", "that", "those", "here", "its", "itself"],
     Entity.Type.MISC: ["there", "it", "this", "these", "that", "those", "here", "its", "itself"],
+    Entity.Type.MALE: ["i", "you", "he", "me", "you", "him", "your", "his", "myself", "yourself", "himself"],
+    Entity.Type.FEMALE: ["i", "you", "she", "me", "you", "her", "your", "her", "myself", "yourself", "herself"],
+    Entity.Type.PLURAL: ["we", "they", "them", "our", "their", "ourselves", "yourselves", "themselves"]
+}
 
-
+attributes = {
+    Entity.Type.LOC: "type",
+    Entity.Type.ORG: "type",
+    Entity.Type.MISC: "type",
+    Entity.Type.MALE: "gender",
+    Entity.Type.FEMALE: "gender",
+    Entity.Type.PLURAL: "multiplicity"
 }
 
 
@@ -32,7 +39,6 @@ def main(**kwargs):
             exit(0)
 
         entities = p.get_entities(text)
-
         for ent in entities:
 
             try:
@@ -40,39 +46,48 @@ def main(**kwargs):
             except (wikipedia.exceptions.DisambiguationError, wikipedia.exceptions.WikipediaException):
                 summ = ""
 
-            try:
+            if ent[1] == "PERSON":
                 gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))
+                if gender[0] == "male":
+                    gender = Entity.Type.MALE
+                elif gender[0] == "female":
+                    gender = Entity.Type.FEMALE
                 s.add_entity(Entity(name=ent[0], type=Entity.Type.PER, gender=gender, summary=p.transform([summ])))
-
-            except AttributeError:
-                if ent[1] == ["LOC", "GPE"]:
-                    s.add_entity(Entity(name=ent[0], type=Entity.Type.LOC, summary=p.transform([summ])))
-                elif ent[1] in ["ORG"]:
-                    s.add_entity(Entity(name=ent[0], type=Entity.Type.ORG, summary=p.transform([summ])))
-                elif ent[1] == "MISC":
-                    s.add_entity(Entity(name=ent[0], type=Entity.Type.MISC, summary=p.transform([summ])))
+            elif ent[1] in ["LOC", "GPE"]:
+                s.add_entity(Entity(name=ent[0], type=Entity.Type.LOC, summary=p.transform([summ])))
+            elif ent[1] in ["ORG"]:
+                s.add_entity(Entity(name=ent[0], type=Entity.Type.ORG, summary=p.transform([summ])))
+            elif ent[1] == "MISC":
+                s.add_entity(Entity(name=ent[0], type=Entity.Type.MISC, summary=p.transform([summ])))
 
         anaphora = p.get_anaphora(text)
 
         for anaphor, an_context in anaphora:
 
             most_likely = None
-            h_prob = 0
+            h_prob = -1
 
-            for entity in s.stored_entities:
+            f_list = []
+            for rule, anaphor_list in rules.items():
 
-                if anaphor.lower() in rules[entity.type]:
+                if anaphor in anaphor_list:
+                    f_list.append([attributes[rule], rule])
 
-                    prob = p.sim(an_context, entity.summary)
-                    #print(anaphor, entity.name, prob)
-                    if prob > h_prob:
-                        h_prob = prob
-                        most_likely = entity
+            #print(f_list)
+            #print(anaphor, list(s.get_any(Store.Filter(f_list))))
+            #print(s)
+            for entity in s.get_any(Store.Filter(f_list)):
+
+                prob = p.sim(an_context, entity.summary)
+                #print(anaphor, entity.name, prob)
+                if prob > h_prob:
+                    h_prob = prob
+                    most_likely = entity
 
             if most_likely:
                 print("POSSIBLE MATCH: {} -> {} --- {}".format(anaphor, most_likely.name, h_prob))
-        print("Male entities: ", s.get_all_male())
-        print("Female entities: ", s.get_all_female())
+        #print("Male entities: ", s.get_all_male())
+        #print("Female entities: ", s.get_all_female())
 
 
 if __name__ == '__main__':

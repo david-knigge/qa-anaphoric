@@ -12,6 +12,10 @@ class Entity:
         LOC = auto()
         ORG = auto()
         MISC = auto()
+        MALE = auto()
+        FEMALE = auto()
+        PLURAL = auto()
+
     def __init__(self, name: str, type: Type, **dyn_props) -> None:
         super().__init__()
 
@@ -27,7 +31,6 @@ class Entity:
     def touch(self):
         self.age_touched = Entity.age
         Entity.age += 1
-
 
     def __str__(self) -> str:
         return pformat(self.__dict__, indent=2, width=1)
@@ -64,10 +67,10 @@ class Store:
             print(entity.name,entity.type,entity.gender)
 
     def get_all_male(self):
-        return ([entity.name for entity in self.stored_entities if entity.gender == ['male']])
+        return [entity.name for entity in self.stored_entities if entity.gender == ['male']]
 
     def get_all_female(self):
-        return ([entity.name for entity in self.stored_entities if entity.gender == ['female']])
+        return [entity.name for entity in self.stored_entities if entity.gender == ['female']]
         
     def __str__(self):
         return "{} ENTITIES:\n".format(len(self.stored_entities)) + pformat(
