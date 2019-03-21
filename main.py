@@ -1,6 +1,7 @@
 import spacy
 import argparse
 import wikipedia
+import nltk
 
 from entity_store import Store, Entity
 from nlp import Parser
@@ -45,6 +46,10 @@ def main(**kwargs):
                 summ = wikipedia.summary(ent[0])
             except (wikipedia.exceptions.DisambiguationError, wikipedia.exceptions.WikipediaException):
                 summ = ""
+
+            if nltk.word_tokenize(ent[0])[-1] == nltk.word_tokenize(ent[0].lower().capitalize())[-1]:
+                if ent[0] in open('all_surnames.txt', encoding="utf8").read():
+                    ent = (ent[0], "PERSON",ent[2])
 
             if ent[1] == "PERSON":
                 gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))
@@ -95,8 +100,12 @@ def main(**kwargs):
                     f_list.append([attributes[rule], rule])
 
             for entity in s.get_any(Store.Filter(f_list)):
-
-                prob = p.sim(an_context, entity.summary)
+                if entity.gender:
+                    if (anaphor in ["she","her","herself"]) and (entity.Type.FEMALE == entity.gender):
+                        prob = p.sim(an_context, entity.summary) + 0.2
+                else:
+                    prob = p.sim(an_context, entity.summary)
+                # prob = p.sim(an_context, entity.summary)
 
                 if prob > h_prob:
                     h_prob = prob
