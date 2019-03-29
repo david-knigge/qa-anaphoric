@@ -13,7 +13,8 @@ rules = {
     Entity.Type.MISC: ["there", "it", "this", "these", "that", "those", "here", "its", "itself"],
     Entity.Type.MALE: ["i", "you", "he", "me", "you", "him", "your", "his", "myself", "yourself", "himself"],
     Entity.Type.FEMALE: ["i", "you", "she", "me", "you", "her", "your", "her", "myself", "yourself", "herself"],
-    Entity.Type.PLURAL: ["we", "they", "them", "our", "their", "ourselves", "yourselves", "themselves"]
+    Entity.Type.PLURAL: ["we", "they", "them", "our", "their", "ourselves", "yourselves", "themselves"],
+    Entity.Type.UNDECIDED: ["i", "you", "he", "she", "me", "you", "him", "her", "your", "his", "myself", "yourself", "himself", "herself"]
 }
 
 attributes = {
@@ -22,6 +23,7 @@ attributes = {
     Entity.Type.MISC: "type",
     Entity.Type.MALE: "gender",
     Entity.Type.FEMALE: "gender",
+    Entity.Type.UNDECIDED: "gender",
     Entity.Type.PLURAL: "multiplicity"
 }
 
@@ -52,11 +54,14 @@ def main(**kwargs):
                     ent = (ent[0], "PERSON",ent[2])
 
             if ent[1] == "PERSON":
-                gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))
-                if gender[0] == "male":
-                    gender = Entity.Type.MALE
-                elif gender[0] == "female":
-                    gender = Entity.Type.FEMALE
+                try:
+                    gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))[0]
+                    if gender == "male":
+                        gender = Entity.Type.MALE
+                    elif gender == "female":
+                        gender = Entity.Type.FEMALE
+                except (AttributeError, IndexError) as e:
+                    gender = Entity.Type.UNDECIDED
                 s.add_entity(Entity(
                     name=ent[0],
                     type=Entity.Type.PER,
@@ -64,14 +69,14 @@ def main(**kwargs):
                     summary=p.transform([summ]),
                     loc=(ent[2][1], ent[2][2])
                 ))
-            elif ent[1] in ["LOC", "GPE"]:
+            elif ent[1] in ["LOC", "GPE", "FAC"]:
                 s.add_entity(Entity(
                     name=ent[0],
                     type=Entity.Type.LOC,
                     summary=p.transform([summ]),
                     loc=(ent[2][1], ent[2][2])
                 ))
-            elif ent[1] in ["ORG"]:
+            elif ent[1] in ["ORG", "NORP"]:
                 s.add_entity(Entity(
                     name=ent[0],
                     type=Entity.Type.ORG,
@@ -100,12 +105,9 @@ def main(**kwargs):
                     f_list.append([attributes[rule], rule])
 
             for entity in s.get_any(Store.Filter(f_list)):
-                if entity.gender:
-                    if (anaphor in ["she","her","herself"]) and (entity.Type.FEMALE == entity.gender):
-                        prob = p.sim(an_context, entity.summary) + 0.2
-                else:
-                    prob = p.sim(an_context, entity.summary)
-                # prob = p.sim(an_context, entity.summary)
+
+                rel_dist = abs(an_index - entity.loc[0])
+                prob = p.sim(an_context, entity.summary) + 1 / rel_dist
 
                 if prob > h_prob:
                     h_prob = prob
@@ -113,6 +115,8 @@ def main(**kwargs):
 
             if most_likely:
                 print("POSSIBLE MATCH: '{}' at word index {} -> '{}' at word index {} --- {}".format(anaphor, an_index, most_likely.name, most_likely.loc, h_prob))
+
+            #print(s)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'QA with focus on anaphoric relations')

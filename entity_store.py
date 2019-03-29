@@ -15,6 +15,7 @@ class Entity:
         MALE = auto()
         FEMALE = auto()
         PLURAL = auto()
+        UNDECIDED = auto()
 
     def __init__(self, name: str, type: Type, **dyn_props) -> None:
         super().__init__()
