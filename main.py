@@ -4,6 +4,7 @@ import wikipedia
 import nltk
 
 from entity_store import Store, Entity
+from gold_text import Checker
 from nlp import Parser
 
 
@@ -34,12 +35,14 @@ def main(**kwargs):
 
     s = Store()
     p = Parser()
-
+    c = Checker()
+    check_gold = []
     while True:
         text = str(input("Enter a sentence: "))
-
         if text == "quit":
-            exit(0)
+            exit()
+        elif "check" in text[:5]:
+            print(c.calc_occ(check_gold,str(text[5])))
 
         entities = p.get_entities(text)
         for ent in entities:
@@ -115,8 +118,8 @@ def main(**kwargs):
 
             if most_likely:
                 print("POSSIBLE MATCH: '{}' at word index {} -> '{}' at word index {} --- {}".format(anaphor, an_index, most_likely.name, most_likely.loc, h_prob))
+                check_gold.append((anaphor,most_likely.name))
 
-            #print(s)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'QA with focus on anaphoric relations')
