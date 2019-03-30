@@ -110,7 +110,8 @@ def main(**kwargs):
             for entity in s.get_any(Store.Filter(f_list)):
 
                 rel_dist = abs(an_index - entity.loc[0])
-                prob = p.sim(an_context, entity.summary) + 1 / rel_dist
+                prob = kwargs["wsim"] * p.sim(an_context, entity.summary) + kwargs["widist"] * 1 / rel_dist
+                # prob = p.sim(an_context, entity.summary) + 1 / rel_dist
 
                 if prob > h_prob:
                     h_prob = prob
@@ -121,8 +122,16 @@ def main(**kwargs):
                 check_gold.append((anaphor,most_likely.name))
 
 
+def restricted_float(x):
+    x = float(x)
+    if x < 0.0 or x > 1.0:
+        raise argparse.ArgumentTypeError("%r not in range [0.0, 1.0]"%(x,))
+    return x
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'QA with focus on anaphoric relations')
+    parser.add_argument("--wsim", default=0.5, type=restricted_float)
+    parser.add_argument("--widist", default=0.5, type=restricted_float)
     args = parser.parse_args()
 
-    main(*vars(args))
+    main(**vars(args))
