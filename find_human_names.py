@@ -24,14 +24,14 @@ def get_human_names(text):
     return (person_list)
 
 text2 = """
-People like Marthijn Den Hartog, David Knigge, Laurence Bont and Pepijn Sibbes are all students at the UVA. 
+People like Marthijn Den Hartog and David Knigge and Laurence Bont and Pepijn Sibbes are all students at the UVA. 
 They work on assignments for their Prof. Tom Lentz and the TA Noa."
 """
 
 text = "People like Laurence, Marthijn and David and Pepijn"
 
-names = get_human_names(text)
-print(names)
-print("LAST, FIRST")
-for name in names: 
-    print(name)
+#names = get_human_names(text2)
+#print(names)
+#print("LAST, FIRST")
+#for name in names: 
+    #print(name)
