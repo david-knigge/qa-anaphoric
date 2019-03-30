@@ -1,3 +1,4 @@
+tfirst = ["uk","""Nearly three years since the United Kingdom voted to leave the European Union, British politicians are still arguing over how, when or even if the world's fifth largest economy should leave the bloc it first joined1973. When May set the March 29 exit date two years ago by serving the formal Article 50 divorce papers, she declared there would be "no turning back" but parliament's refusal to ratify the withdrawal deal she agreed with the EU has thrust her government into crisis. Now, just nine days before the exit date, May is to write to European Council President Donald Tusk to ask for a short delay. May "won't be asking for a long extension, said a source in her Downing Street office, who spoke on condition of anonymity. May had warned lawmakers that she could seek an extension beyond June 30 if they voted down her treaty a third time. While the United Kingdom remains divided over Brexit, most agree that it will shape the prosperity of generations to come and, if it goes badly, could undermine the West and threaten London's position as the dominant global financial capital. The loss of Britain for the EU is the biggest blow yet to more than 60 years of effort to forge European unity in the wake of two world wars, though the 27 other members of the bloc have shown surprising unity during the tortuous negotiations. Britain's almost three-year crisis over Brexit has left allies and investors puzzled by a country that for decades seemed a confident pillar of Western economic and political stability."""]
 gfirst = ["uk","""Nearly three years since the United Kingdom voted to leave the
 European Union, British politicians are still arguing over how, when or even if
 the world's fifth largest economy should leave the bloc ---the United Kindom---
@@ -26,9 +27,19 @@ gsecond = ["musk","""Mr. Musk declined to discuss what profit margin the company
 dsecond = [('he','Musk'),('he','Musk'),('its','Tesla'),('he','Musk'),('he','Musk'),('he','Musk'),
 ('he','Musk'),('i','Musk'),('he','Musk')]
 
-gthirth = ["shooting","""In the gunman's self-made video of the killings ---the gunman--- had posted to Facebook, a man can be seen trying to tackle ---the gunman--- as ---the gunman--- began firing in Al Noor mosque. That man was Naeem Rashid, according to witnesses. ---Naeem Rashid--- family described ---Naeem Rashid--- as an intelligent, ambitious and devout father of three. ---Naeem Rashid--- eldest son, Talha Naeem, was also killed. Mr. Rashid was in ---Mr. Rashid--- 40s, according to Stuff and Radio New Zealand. His brothers, interviewed in Pakistan, said ---Naeem Rashid--- had left a senior position at Citibank in the city of Lahore in 2010 to pursue a doctorate in Christchurch and raise ---Naeem Rashid--- children in a peaceful country. Starting over proved more difficult than ---Naeem Rashid--- had expected. "Like everybody who leaves this country, ---Naeem Rashid--- left Pakistan because of lack of opportunities here," said Dr. Khurshid Alam, one of Mr. Rashid"s brothers. "---Naeem Rashid--- went there to do his Ph.D. Because of the financial situation, ---Naeem Rashid--- couldn"t complete it, so ---Naeem Rashid--- was teaching part-time." ---Naeem Rashid--- became much more devout during ---Naeem Rashid--- time in New Zealand, according to ---Naeem Rashid--- brothers. They said ---Naeem Rashid--- talked about wanting to die a martyr, which ---Naeem Rashid--- felt was the most honorable way for a Muslim to die."""]
+tthirth = ["shooting","""In the gunmans self-made video of the killings he had posted to Facebook, a man can be seen trying to tackle him as he began firing in Al Noor mosque. That man was Naeem Rashid, according to witnesses. His family described him as an intelligent, ambitious and devout father of three. His eldest son, Talha Naeem, was also killed. Mr. Rashid was in his 40s, according to Stuff and Radio New Zealand. His brothers, interviewed in Pakistan, said he had left a senior position at Citibank in the city of Lahore in 2010 to pursue a doctorate in Christchurch and raise his children in a peaceful country. Starting over proved more difficult than he had expected. "Like everybody who leaves this country, he left Pakistan because of lack of opportunities here," said Dr. Khurshid Alam, one of Mr. Rashid his brothers. "He went there to do his Ph.D. Because of the financial situation, he couldnt complete it, so he was teaching part-time." He became much more devout during his time in New Zealand, according to his brothers. They said he talked about wanting to die a martyr, which he felt was the most honorable way for a Muslim to die."""]
+dthirth = [('he','the gunman'),('him','the gunamn'),('his','Rashid'),('him','Rashid'),
+('his','Rashid'),('he','Rashid'),('his','Rashid'),('he','Rashid'),
+('he','Rashid'),('he','Rashid'),('his','Rashid'),('he','Rashid'),
+('he','Rashid'),('he','Rashid'),('his','Rashid'),('his','Rashid'),
+('he','Rashid'),('he','Rashid'),('here','Pakistan'),('there','New Zealand'),('it','Ph.D.')]
 
-gfourth = ["pogba", """Manchester United interim boss Ole Gunnar Solskjaer has restored the confidence and freedom ---Manchester United--- lacked towards the end of Jose Mourinho"s tenure and the Norwegian deserves to take over full time, midfielder Paul Pogba has said. Former United striker Solskjaer has rejuvenated the team since replacing the sacked Mourinho in December, helping ---Manchester United--- win 10 out of the 13 Premier League games since ---Ole Gunnar Solskjaer--- appointment and reaching the Champions League quarter-finals. "---Manchester United--- want ---Ole Gunnar Solskjaer--- to stay. The results have been great. ---Pogba--- have a great relationship with ---Ole Gunnar Solskjaer---, ---Ole Gunnar Solskjaer--- has a great relationship with the players," Pogba told Sky Sports. "When a player is happy, ---a player--- wants to keep being happy. Solskjaer deserves ---being happy---. ---Ole Gunnar Solskjaer--- knows the club, ---Ole Gunnar Solskjaer--- knows everything about the club. ---Ole Gunnar Solskjaer--- is a really happy coach that gave confidence back to the players. "This gave ---Manchester United--- the freedom to play and enjoy football again because maybe ---Manchester United--- lost that with the results that ---Manchester United--- had before." Despite winning the World Cup with France last year, Pogba struggled for form under Mourinho who benched ---Pogba---, but the 26-year-old is back to ---Pogba--- best under Solskjaer with nine goals and seven assists in all competitions. "Maybe ---Manchester United--- lost confidence, maybe things went wrong. A lot of talking outside that ---Manchester United--- weren"t used to," Pogba said, reflecting on the final part of Mourinho"s tenure. "---Pogba--- don"t like to talk about the past. ---Pogba--- like to talk about the future because that"s what matters. ---Manchester United---'re better now and the results have been brilliant." """]
+tfourth = ["pogba", """Manchester United interim boss Ole Gunnar Solskjaer has restored the confidence and freedom they lacked towards the end of Jose Mourinho"s tenure and the Norwegian deserves to take over full time, midfielder Paul Pogba has said. Former United striker Solskjaer has rejuvenated the team since replacing the sacked Mourinho in December, helping them win 10 out of the 13 Premier League games since his appointment and reaching the Champions League quarter-finals. "We want him to stay. The results have been great. I have a great relationship with him, he has a great relationship with the players," Pogba told Sky Sports. "When a player is happy, he wants to keep being happy. Solskjaer deserves it. He knows the club, he knows everything about the club. He is a really happy coach that gave confidence back to the players. "This gave us the freedom to play and enjoy football again because maybe we lost that with the results that we had before." Despite winning the World Cup with France last year, Pogba struggled for form under Mourinho who benched him, but the 26-year-old is back to his best under Solskjaer with nine goals and seven assists in all competitions. "Maybe we lost confidence, maybe things went wrong. A lot of talking outside that we weren"t used to," Pogba said, reflecting on the final part of Mourinho"s tenure. "I don"t like to talk about the past. I like to talk about the future because that"s what matters. We"re better now and the results have been brilliant." """]
+dfourth = [('they','Manchester United'),('them','Manchester United'),('his','Solskjaer'),
+('him','Solskjaer'),('I','Pogba'),('him','Solskjaer'),('he','Solskjaer'),('he','Solskjaer'),
+('he','Solskjaer'),('he','Solskjaer'),('we','Manchester United'),('we','Manchester United'),
+('him','Pogba'),('his','Pogba'),('we','Manchester United'),('we','Manchester United'),
+('i','Pogba'),('we','Manchester United')]
 
 class Checker:
 
@@ -38,10 +49,16 @@ class Checker:
     def calc_occ(self, check_list,list_nr):
         true_pos, false_pos, true_neg, false_neg = 0,0,0,0
         gold_list = []
+
         if list_nr == "0":
             gold_list = dfirst
         elif list_nr == "1":
             gold_list = dsecond
+        elif list_nr == "2":
+            gold_list = dthirth
+        elif list_nr == "3":
+            gold_list == dfourth
+
         listl = len(gold_list)
         for pair in check_list:
             if pair in gold_list:
@@ -49,6 +66,7 @@ class Checker:
                 gold_list.remove(pair)
             else:
                 false_pos+=1
+
         false_neg = len(gold_list)
         precision = (true_pos/(true_pos+false_pos))
         recall = (true_pos/(true_pos+false_neg))
