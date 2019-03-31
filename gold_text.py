@@ -22,10 +22,10 @@ gfourth = [('they','Manchester United'),('them','Manchester United'),('his','Sol
 ('i','Pogba'),('we','Manchester United')]
 
 tfifth = ['biden', 'The allegation was made in an online essay published on Friday by Lucy Flores, a party activist who was running to be Nevada’s lieutenant governor. Flores said Biden also touched her shoulders and smelled her hair when they appeared at an event together, making her feel uncomfortable. “He proceeded to plant a big slow kiss on the back of my head,” Flores wrote in the essay published in The Cut, an outlet of New York Magazine. “I couldn’t move and I couldn’t say anything. I wanted nothing more than to get Biden away from me.” Responding to the accusation, Biden spokesman Bill Russo said the vice president had been happy to support Flores and to speak on her behalf at the event. “Neither then, nor in the years since, did he or the staff with him at the time have an inkling that Ms. Flores had been at any time uncomfortable, nor do they recall what she describes,” Russo said on Friday in a statement. ']
-dfifth = [('her', 'Lucy Flores'),('her', 'Lucy Flores'),('her', 'Lucy Flores'),('He', 'Biden'), ('my', 'Lucy Flores'), ('I', 'Lucy Flores'),('I', 'Lucy Flores'),('I', 'Lucy Flores'),('her', 'Lucy Flores'),('he', 'Biden'),('him', 'Biden'),('they', 'the staff'),('she', 'Lucy Flores')]
+gfifth = [('her','Flores'),('her','Flores'),('her','Flores'),('He','Biden'),('my','Flores'),('i','Flores'),('i','Flores'),('i','Flores'),('her','Flores'),('he','Biden'),('him','Biden'),('they','the staff'),('she','Flores')]
 
 tsixth = ['washington','U.S. Attorney General William Barr plans to make public a redacted copy of Special Counsel Robert Mueller’s nearly 400-page investigative report into Russian interference in the 2016 election by mid-April, “if not sooner,” he said in a letter to lawmakers on Friday. “Everyone will soon be able to read it on their own,” Barr wrote in the letter to the top Democrats and Republicans on the Senate and House Judiciary committees. He said he was willing to appear before both committees to testify about Mueller’s report on May 1 and May 2. On March 22, Mueller completed his 22-month probe and Barr on Sunday sent a four-page letter to Congress that outlined the main findings. Barr told lawmakers that the investigation did not establish that members of the election campaign of President Donald Trump conspired with Russia. ']
-dsixth = [('he','William Barr'),('their','everyone'),('he','William Barr'),('he','William Barr'),('his','Mueller')]
+gsixth = [('he','Barr'),('their','everyone'),('he','Barr'),('he','Barr'),('his','Mueller')]
 class Checker:
 
     def __init__(self):
@@ -35,7 +35,9 @@ class Checker:
         "0": gfirst,
         "1": gsecond,
         "2": gthirth,
-        "3": gfourth
+        "3": gfourth,
+        "4": gfifth,
+        "5": gsixth
     }
 
     def calc_occ(self, check_list,list_nr):

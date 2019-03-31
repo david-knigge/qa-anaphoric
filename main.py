@@ -119,7 +119,10 @@ def main(**kwargs):
 
             if most_likely:
                 print("POSSIBLE MATCH: '{}' at word index {} -> '{}' at word index {} --- {}".format(anaphor, an_index, most_likely.name, most_likely.loc, h_prob))
-                check_gold.append((anaphor,most_likely.name))
+                if entity.type == entity.Type.PER:
+                    check_gold.append((anaphor,nltk.word_tokenize(most_likely.name)[-1]))
+                else:
+                    check_gold.append((anaphor,most_likely.name))
 
         # print(s)
 
@@ -137,4 +140,4 @@ if __name__ == '__main__':
     parser.add_argument("--widist", default=0.5, type=restricted_float)
     args = parser.parse_args()
 
-    main(**vars(args))
+main(**vars(args))
