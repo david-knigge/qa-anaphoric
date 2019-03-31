@@ -26,6 +26,23 @@ gfifth = [('her','Flores'),('her','Flores'),('her','Flores'),('He','Biden'),('my
 
 tsixth = ['washington','U.S. Attorney General William Barr plans to make public a redacted copy of Special Counsel Robert Mueller’s nearly 400-page investigative report into Russian interference in the 2016 election by mid-April, “if not sooner,” he said in a letter to lawmakers on Friday. “Everyone will soon be able to read it on their own,” Barr wrote in the letter to the top Democrats and Republicans on the Senate and House Judiciary committees. He said he was willing to appear before both committees to testify about Mueller’s report on May 1 and May 2. On March 22, Mueller completed his 22-month probe and Barr on Sunday sent a four-page letter to Congress that outlined the main findings. Barr told lawmakers that the investigation did not establish that members of the election campaign of President Donald Trump conspired with Russia. ']
 gsixth = [('he','Barr'),('their','everyone'),('he','Barr'),('he','Barr'),('his','Mueller')]
+
+tseventh = ['slovakia', 'Miss Caputova, who has almost no political experience, defeated high-profile diplomat Maros Sefcovic, nominated by the governing party, in a second round run-off vote. She framed the election as a struggle between good and evil. The election follows the murder of an investigative journalist last year. Jan Kuciak was looking into links between politicians and organised crime when he was shot alongside his fiancée in February 2018. Miss Caputova cited Mister Kuciak s death as one of the reasons she decided to run for president, which is a largely ceremonial role. With almost all votes counted, she has won about 58% to Mister Sefcovics 42%. She gained prominence as a lawyer, when she led a case against an illegal landfill lasting 14 years.']
+gseventh = [('she','Caputova'), ('he', 'Kuciak'), ('his', 'Kuciak'), ('she', 'Caputova'),
+('she', 'Caputova'), ('she', 'Caputova'), ('she', 'Caputova')]
+
+teigth = ['isreal', 'Brazilian President Jair Bolsonaro began a visit to Israel on Sunday with a decision pending on fulfilling a promise to move his country’s embassy to Jerusalem, a policy change opposed by military officers in his cabinet. The four-day visit by the far-right leader comes a week before Israel’s closely contested election in which the right-wing Prime Minister Benjamin Netanyahu is battling a popular centrist candidate and corruption allegations, which he denies. "I love Israel," Bolsonaro said in Hebrew at a welcoming ceremony, with Netanyahu at his side, at Tel Aviv’s Ben-Gurion airport. Netanyahu said he and Bolsonaro would sign "many agreements", including security deals, and that the Brazilian leader would visit Judaism’s holy Western Wall, "in Jerusalem, our eternal capital". Visiting Brazil for the Jan. 1 presidential inauguration, Netanyahu said Bolsonaro had told him that moving the Brazilian embassy in Israel to Jerusalem from Tel Aviv was a matter of "when, not if".']
+geigth = [('his', 'Bolsonaro'), ('his', 'Bolsonaro'), ('he', 'Netanyahu'), ('his', 'Bolsonaro'),
+('our', 'the Jews'), ('he', 'Netanyahu'), ('him', 'Netanyahu')]
+
+tninth = ['netanyahu', 'Benjamin Netanyahu is using a second American president in his re-election campaign ads, but with a twist, featuring a famously frosty encounter with Barack Obama. The right-wing prime minister put up billboards several weeks ago picturing a smiling President Donald Trump shaking his hand - highlighting warm ties marked by dramatic U.S. policy moves that Netanyahu has welcomed with delight. A video Netanyahu posted on Thursday on Facebook, Twitter and Instagram portrayed his cold relationship with Trump’s predecessor to try to attract votes. It shows a 2011 Oval Office meeting in which Netanyahu lectured a grim-looking Obama on how the Democrat’s vision of ways to achieve Middle East peace was unrealistic. At the meeting, Netanyahu insisted Israel would never pull back to its pre-1967 war borders — which would mean big concessions of occupied land — that Obama had said should be the basis for negotiations on creating a Palestinian state. Opinion polls show Netanyahu, now in his fourth term and battling corruption allegations he denies, locked in a close race with centrist challenger Benny Gantz, a former armed forces chief. Voting is less than two weeks away.']
+gninth = [('his', 'Netanyahu'), ('his', 'Netanyahu'), ('It', 'video'), ('his', 'Netanyahu'),
+('its', 'Israel'), ('his', 'Netanyahu'), ('he', 'Netanyahu')]
+
+ttenth = ['djokovic', 'Djokovic is a five-time finalist at the Cincinnati-area event but has never won the title. He moved a step closer with his victory over Raonic to improve to 9-0 in his career against the Canadian. Djokovic broke Raonic’s serve twice in a row to close the first set before he had his serve broken in what was otherwise a back-and-forth second set. In the decisive third, the Serbian fell behind a break at 2-1 before converting his fourth break-point chance in the next game. He seized the momentum from there, winning four of the last five games. In the semifinals, Djokovic will face seventh-seeded Croatian Marin Cilic, who downed 13th-seeded Spaniard Pablo Carreno Busta 7-6 (7), 6-4 in his second match of the day. Despite pulling double duty, Cilic got the better of Carreno Busta in what was a lengthy first-set tiebreaker, finally clinching it on his fourth set point. The second set was more straightforward, as Cilic never faced a break point on his way to claiming victory in 1 hour, 45 minutes.']
+gtenth = [('He', 'Djokovic'), ('his', 'Djokovic'), ('his', 'Djokovic'), ('he', 'Djokovic'),
+('his', 'Djokovic'), ('he', 'Djokovic'), ('his', 'Cilic'), ('his', 'Cilic'), ('his', 'Cilic')]
+
 class Checker:
 
     def __init__(self):
@@ -37,7 +54,11 @@ class Checker:
         "2": gthirth,
         "3": gfourth,
         "4": gfifth,
-        "5": gsixth
+        "5": gsixth,
+        "6": gseventh,
+        "7": geigth,
+        "8": gninth,
+        "9": gtenth
     }
 
     def calc_occ(self, check_list,list_nr):
