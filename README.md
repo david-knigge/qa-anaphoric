@@ -14,7 +14,7 @@ To be able to run our implementation, clone this git and run:
 pip install requirements.txt
 ```
 
-## Example Runs
+## Usage
 
 ```
 python main.py
@@ -31,6 +31,8 @@ To set the inverse distance weighting use:
 ```
 --widist [float]
 ```
+
+The program will then ask for input, and start resolving anaphoric relations in that input.
 
 ## Authors
 
