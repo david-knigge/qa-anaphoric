@@ -135,7 +135,7 @@ def main(**kwargs):
                 else:
                     check_gold.append((anaphor,most_likely.name))
 
-        print(s)
+        # print(s)
 
 
 # Weights can only be between 0 and 1
