@@ -1,9 +1,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import spacy
 from spacy.tokens.doc import get_entity_info
-from nltk.corpus import reuters
 
 
 class Parser:
@@ -14,7 +12,7 @@ class Parser:
     def __init__(self) -> None:
         super().__init__()
 
-        with open("words.txt") as f:
+        with open("data/words.txt") as f:
             line = f.readline()
             while line:
                 self.vocab.add(line.rstrip("\n").lower())

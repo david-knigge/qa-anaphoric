@@ -1,0 +1,5 @@
+wolframalpha
+scikit-learn
+nltk
+wikipedia
+spacy

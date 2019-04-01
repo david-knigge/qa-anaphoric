@@ -53,7 +53,7 @@ def main(**kwargs):
                 summ = ""
 
             if nltk.word_tokenize(ent[0])[-1] == nltk.word_tokenize(ent[0].lower().capitalize())[-1]:
-                if ent[0] in open('all_surnames.txt', encoding="utf8").read():
+                if ent[0] in open('data/all_surnames.txt', encoding="utf8").read():
                     ent = (ent[0], "PERSON",ent[2])
 
             if ent[1] == "PERSON":
@@ -63,7 +63,7 @@ def main(**kwargs):
                         gender = Entity.Type.MALE
                     elif gender == "female":
                         gender = Entity.Type.FEMALE
-                except (AttributeError, IndexError) as e:
+                except (AttributeError, IndexError, Exception) as e:
                     gender = Entity.Type.UNDECIDED
                 s.add_entity(Entity(
                     name=ent[0],
@@ -111,7 +111,6 @@ def main(**kwargs):
 
                 rel_dist = abs(an_index - entity.loc[0])
                 prob = kwargs["wsim"] * p.sim(an_context, entity.summary) + kwargs["widist"] * 1 / rel_dist
-                # prob = p.sim(an_context, entity.summary) + 1 / rel_dist
 
                 if prob > h_prob:
                     h_prob = prob
@@ -124,7 +123,7 @@ def main(**kwargs):
                 else:
                     check_gold.append((anaphor,most_likely.name))
 
-        # print(s)
+        print(s)
 
 
 def restricted_float(x):
@@ -136,8 +135,8 @@ def restricted_float(x):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'QA with focus on anaphoric relations')
-    parser.add_argument("--wsim", default=0.5, type=restricted_float)
-    parser.add_argument("--widist", default=0.5, type=restricted_float)
+    parser.add_argument("--wsim", default=0.5, type=restricted_float, help="weight of context similarity")
+    parser.add_argument("--widist", default=0.5, type=restricted_float, help="weight of inverse distance measure")
     args = parser.parse_args()
 
 main(**vars(args))
