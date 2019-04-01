@@ -17,7 +17,7 @@ pip install requirements.txt
 ## Usage
 
 ```
-python main.py
+python main.py --wsim [float] --widist [float]
 ```
 
 ### Optional parameters:
