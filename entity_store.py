@@ -3,10 +3,12 @@ from pprint import pformat
 import wolframalpha
 
 
+# Store entity attributes
 class Entity:
 
     age = 0
 
+    # Possible entity types
     class Type(Enum):
         PER = auto()
         LOC = auto()
@@ -17,6 +19,7 @@ class Entity:
         PLURAL = auto()
         UNDECIDED = auto()
 
+    # Set entity attributes
     def __init__(self, name: str, type: Type, **dyn_props) -> None:
         super().__init__()
 
@@ -29,10 +32,12 @@ class Entity:
         for prop in dyn_props:
             setattr(self, prop, dyn_props[prop])
 
+    # Reset time this entity has been touched last
     def touch(self):
         self.age_touched = Entity.age
         Entity.age += 1
 
+    # Return formatted string containing details on the entity.
     def __str__(self) -> str:
         return pformat(self.__dict__, indent=2, width=1)
 
@@ -40,10 +45,13 @@ class Entity:
         return self.__str__()
 
 
+# Stores set of entities found in the document.
 class Store:
 
     stored_entities = []
 
+    # Create a search filter, takes a list of key value pairs, where the keys are attributes of the entity to filter on
+    # and the values are the values of these attiributes.
     class Filter:
         def __init__(self, search_filter: list) -> None:
             self.filter = []
@@ -53,38 +61,29 @@ class Store:
     def __init__(self):
         super().__init__()
 
+    # Add a new entity to the store if it is not contained in the list already.
     def add_entity(self, entity: Entity):
         if not list(self.get_all(self.Filter([["name", entity.name]]))):
             self.stored_entities.append(entity)
 
+    # Return entites that possess any of the filter attribute value pairs
     def get_any(self, sf: Filter) -> filter:
         return filter(lambda x: (any(getattr(x, f["attr"], None) == f["val"] for f in sf.filter)), self.stored_entities)
 
+    # Return entities that possess all of the filter attribute value pairs
     def get_all(self, sf: Filter) -> filter:
         return filter(lambda x: (all(getattr(x, f["attr"], None) == f["val"] for f in sf.filter)), self.stored_entities)
 
-    def print_genders(self):
-        for entity in self.stored_entities:
-            print(entity.name,entity.type,entity.gender)
-
-    def get_all_male(self):
-        return [entity.name for entity in self.stored_entities if entity.gender == ['male']]
-
-    def get_all_female(self):
-        return [entity.name for entity in self.stored_entities if entity.gender == ['female']]
-        
+    # Print formatted representation
     def __str__(self):
         return "{} ENTITIES:\n".format(len(self.stored_entities)) + pformat(
             sorted(self.stored_entities, key=lambda x: x.age_touched, reverse=True)
         )
 
-    #try except hier weghalen
+    # Query wolfram api
     def wolfram_alpha_query(self, query: str):
         wa = wolframalpha.Client("VH5LXL-ALTVYGQVU3")
-        #try:
         return [result.text for result in wa.query(query).results]
-        #except AttributeError:
-            #return None
 
 # s = Stack()
 # s.add_entity(Entity(name="henk", type=Entity.Type.PER))

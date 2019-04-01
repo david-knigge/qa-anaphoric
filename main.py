@@ -37,25 +37,32 @@ def main(**kwargs):
     p = Parser()
     c = Checker()
     check_gold = []
+
     while True:
         text = str(input("Enter a sentence: "))
         if text == "quit":
             exit()
+
+        # check against silver standard
         elif "check" in text[:5]:
             print(c.calc_occ(check_gold,str(text[5])))
 
+        # obtain entities from the text, add them to the entity store.
         entities = p.get_entities(text)
         for ent in entities:
 
+            # Try to obtain the wikipedia page for a named entity
             try:
                 summ = wikipedia.page(ent[0]).content
             except (wikipedia.exceptions.DisambiguationError, wikipedia.exceptions.WikipediaException):
                 summ = ""
 
+            # Check if the entity is correctly classified
             if nltk.word_tokenize(ent[0])[-1] == nltk.word_tokenize(ent[0].lower().capitalize())[-1]:
                 if ent[0] in open('data/all_surnames.txt', encoding="utf8").read():
                     ent = (ent[0], "PERSON",ent[2])
 
+            # If the entity is a person, find their gender through the wolfram api.
             if ent[1] == "PERSON":
                 try:
                     gender = s.wolfram_alpha_query("What is the gender of {}?".format(ent[0]))[0]
@@ -94,19 +101,24 @@ def main(**kwargs):
                     loc=(ent[2][1], ent[2][2])
                 ))
 
+        # Obtain all anaphora in the text.
         anaphora = p.get_anaphora(text)
 
+        # For every anaphor, calculate the most likely anaphoric antecedent.
         for anaphor, an_context, an_index in anaphora:
 
             most_likely = None
             h_prob = -1
 
             f_list = []
+
+            # Create filter based on the set of rules above.
             for rule, anaphor_list in rules.items():
 
                 if anaphor in anaphor_list:
                     f_list.append([attributes[rule], rule])
 
+            # Filter entitiy store.
             for entity in s.get_any(Store.Filter(f_list)):
 
                 rel_dist = abs(an_index - entity.loc[0])
@@ -126,6 +138,7 @@ def main(**kwargs):
         print(s)
 
 
+# Weights can only be between 0 and 1
 def restricted_float(x):
     x = float(x)
     if x < 0.0 or x > 1.0:

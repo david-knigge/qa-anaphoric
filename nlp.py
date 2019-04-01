@@ -4,11 +4,13 @@ import spacy
 from spacy.tokens.doc import get_entity_info
 
 
+# Implements methods for parsing anaphora and named entities
 class Parser:
 
     vocab = set()
     common_pronouns = ["this", "these", "that", "those", "here", "there"]
 
+    # read in vocab and initialize vectorizer
     def __init__(self) -> None:
         super().__init__()
 
@@ -22,15 +24,19 @@ class Parser:
         self.nlp = spacy.load("en_core_web_sm")
         self.nlp.add_pipe(self.nlp.create_pipe('sentencizer'))
 
+    # transform a given document with the tfidfvectorizer
     def transform(self, doc: list):
         return self.model.transform(doc).getrow(0)
 
+    # return vocab of the model
     def get_feature_names(self):
         return self.model.get_feature_names()
 
+    # calculate cosine similarity between two feature vectors
     def sim(self, v1, v2):
         return cosine_similarity(v1, v2)[0][0]
 
+    # given a document, return all anaphora in it, along with their index in the tokenized document.
     def get_anaphora(self, input_doc):
         anaphoric_words = []
         docs = self.nlp(input_doc.lower())
@@ -42,6 +48,7 @@ class Parser:
                 w_index += 1
         return anaphoric_words
 
+    # Return all entities in a document, along with their index in the tokenized document
     def get_entities(self, input_sentence):
         entities = []
         doc = self.nlp(input_sentence)

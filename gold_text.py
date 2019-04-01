@@ -61,6 +61,8 @@ class Checker:
         "9": gtenth
     }
 
+    # Check how many of the silver standard anaphoric relations are found by the model, in terms of precision and
+    # recall.
     def calc_occ(self, check_list,list_nr):
         true_pos, false_pos, true_neg, false_neg = 0,0,0,0
 
